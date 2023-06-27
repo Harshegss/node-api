@@ -2,7 +2,7 @@ var http = require("http");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-var mysql = require("mysql");
+var mysql = require("mysql2");
 
 app.use(morgan("dev"));
 
@@ -16,9 +16,8 @@ var con = mysql.createConnection({
 con.connect((err) => {
   if (err) {
     console.error("Error connecting to the database: " + err.stack);
-    return;
   }
-  // console.log('Connected to the database.');
+  console.log('Connected to the database.');
 });
 
 app.get("/items", (req, res) => {
