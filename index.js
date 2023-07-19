@@ -6,18 +6,22 @@ var mysql = require("mysql2");
 
 app.use(morgan("dev"));
 
+app.set("view engine", "ejs");
+
+app.use(express.json());
+
 var con = mysql.createConnection({
-  host: "92.204.133.153",
-  user: "siteinte_hello_node",
-  password: "B5HmQL~cQTPB",
-  database: "siteinte_hello_node",
+  host: "68.66.226.83",
+  user: "tstarghserver_egss_career",
+  password: "tstarghserver_egss_career",
+  database: "tstarghserver_egss_career",
 });
 
 con.connect((err) => {
   if (err) {
     console.error("Error connecting to the database: " + err.stack);
   }
-  console.log('Connected to the database.');
+  console.log("Connected to the database.");
 });
 
 // app.get("/items", (req, res) => {
@@ -27,19 +31,17 @@ con.connect((err) => {
 //   //   res.status(200).json(results);
 //   // });
 // });
-app.route('/items')
-.get((req, res) => {
-      con.query("SELECT * FROM test", (error, results) => {
-    if (error) throw error;
-    res.status(200).json(results);
-  });
+
+app.route("/items")
+  .get((req, res) => {
+    res.render("home");
   })
   .post((req, res) => {
-    res.send('Add a book')
+    console.log(req.body.name);
+    res.send(`<h1>${req.body.name}</h1>`);
   })
   .put((req, res) => {
-    res.send('Update the book')
-  })
-  
-app.listen(8080);
+    res.send("Update the book");
+  });
 
+app.listen(8080);
